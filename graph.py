@@ -11,7 +11,7 @@ class Graph:
     def change_flow(self, first_node, second_node, delta_flow):
         self.edges[first_node][second_node][0] += delta_flow
     
-    def get_nodes_from(self, node): 
+    def get_nodes_from_node(self, node): 
        return list(self.edges[node].keys())
 
 # g = Graph()

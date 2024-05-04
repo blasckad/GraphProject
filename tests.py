@@ -37,9 +37,16 @@ from graph import Graph
 
 # print(g._graph)
 
+def generate_graph(node_count, edges_count, seed=None):
+    generate = nx.dense_gnm_random_graph(node_count, edges_count, seed)
+    graph = Graph()
+    for edge in generate.edges:
+        graph.add_edge(edge[0], edge[1], random.randint(1, 100))
+    return graph
 
-g = nx.dense_gnm_random_graph(10, 20, 5)
+g = generate_graph(10,15)
 
 print(g.edges)
+
 
 
