@@ -45,8 +45,4 @@ def generate_graph(node_count, edges_count, seed=None):
     return graph
 
 g = generate_graph(10,15)
-
-print(g.edges)
-
-
-
+print(g.get_all_edges())
