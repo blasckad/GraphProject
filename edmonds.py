@@ -1,4 +1,5 @@
 from graph import Graph
+from collections import deque
 
 
 def edmonds_karp(graph: Graph, source: int, stock: int) -> int:
@@ -7,15 +8,15 @@ def edmonds_karp(graph: Graph, source: int, stock: int) -> int:
     and return value of maximum flow
     """
     max_flow = 0
-    for _ in range(100000):
-        queue = [source]
+    for _ in range(5000):
+        queue = deque([source])
         # visited is dict like {child: parent}
         visited = {source: None}
         next_iteration = True
-        path: list[int] = []
+        path = deque()
         # find shortest path
         while queue and next_iteration:
-            pivot = queue.pop(0)
+            pivot = queue.popleft()
             for node in graph.get_nodes_from_node(pivot):
                 if node not in visited:
                     visited[node] = pivot
@@ -24,21 +25,19 @@ def edmonds_karp(graph: Graph, source: int, stock: int) -> int:
                         next_iteration = False
                         break
         if queue:
-            child = queue.pop()
+            child = queue.popleft()
             parent = visited[child]
-            path.append(child)
+            path.appendleft(child)
             # delta_flow is minimum residual flow
-            delta_flow = graph.get_edge_stat(parent, child)
-            delta_flow = min(delta_flow[1], delta_flow[0])
+            delta_flow = graph.get_edge_stat(parent, child)[0]
             # Only a source has None parent
             while parent is not None:
                 delta = graph.get_edge_stat(parent, child)
-                if delta_flow > min(delta[1], delta[0]):
-                    delta_flow = min(delta[1], delta[0])
+                if delta_flow > delta[0]:
+                    delta_flow = delta[0]
                 child = parent
                 parent = visited[child]
-                path.append(child)
-            path = path[::-1]
+                path.appendleft(child)
             max_flow += delta_flow
             # Changing the residual network
             for i in range(len(path) - 1):
