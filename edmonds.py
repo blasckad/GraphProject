@@ -1,5 +1,6 @@
 from graph import Graph
 from collections import deque
+import time
 
 
 def edmonds_karp(graph: Graph, source: int, stock: int) -> int:
@@ -32,9 +33,7 @@ def edmonds_karp(graph: Graph, source: int, stock: int) -> int:
             delta_flow = graph.get_edge_stat(parent, child)[0]
             # Only a source has None parent
             while parent is not None:
-                delta = graph.get_edge_stat(parent, child)
-                if delta_flow > delta[0]:
-                    delta_flow = delta[0]
+                delta_flow = min(delta_flow, graph.get_edge_stat(parent, child)[0])
                 child = parent
                 parent = visited[child]
                 path.appendleft(child)
@@ -47,3 +46,20 @@ def edmonds_karp(graph: Graph, source: int, stock: int) -> int:
             return max_flow
     
     return max_flow
+
+
+if __name__ == "__main__":
+    g = Graph()
+    i = 0
+    with open("test_flow.txt", 'r') as file:
+        for line in file:
+            if i == 0:
+                g.set_stats(*[int(k) for k in line.rstrip("\n").split(' ')])
+                i += 1
+            else:
+                f, s, cap = [int(k) for k in line.rstrip("\n").split(' ')]
+                g.add_edge(f, s, cap)
+    start = time.time()
+    res = edmonds_karp(g, 1, 4952)
+    print(time.time() - start)
+    print(res)
