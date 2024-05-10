@@ -1,6 +1,9 @@
 import networkx as nx
 import random
 from graph import Graph
+import time
+from edmonds import edmonds_karp
+from dinic import dinic_algorithm
 
 # def generate_graph(node_count, edges_count):
 #     if node_count < 2:
@@ -33,16 +36,21 @@ from graph import Graph
 
 #     return graph
 
-# g = generate_graph(10, 15)
+g = Graph()
 
-# print(g._graph)
+with open('../test_rl10.txt', 'r') as file:
+    for line in file:
+        nums = line.split()
+        # print(nums)
 
-def generate_graph(node_count, edges_count, seed=None):
-    generate = nx.dense_gnm_random_graph(node_count, edges_count, seed)
-    graph = Graph()
-    for edge in generate.edges:
-        graph.add_edge(edge[0], edge[1], random.randint(1, 100))
-    return graph
+        g.add_edge(int(nums[0]), int(nums[1]), int(nums[2]))
 
-g = generate_graph(10,15)
-print(g.get_all_edges())
+start_time = time.time()
+
+print(dinic_algorithm(g, 1, 4952))
+
+end_time = time.time()
+
+elapsed_time = end_time - start_time
+
+print(elapsed_time)
