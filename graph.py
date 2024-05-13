@@ -62,15 +62,9 @@ class Graph:
             del self._edges[first_node][second_node]
 
     def get_nodes_from_node(self, node: int) -> list[int]:
-        # straight_edges = []
         if node not in self._edges:
             return []
         return list(self._edges[node].keys())
-        # for second_node, stats in self._edges[node].items():
-        #     # if it's possible to saturate the flow
-        #     if stats[0] > 0:
-        #         straight_edges.append(second_node)
-        # return straight_edges
     
     def get_parent_nodes(self, node):
         parents = []
