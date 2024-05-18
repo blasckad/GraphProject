@@ -141,6 +141,21 @@ def test_dinic(init, edges, expected):
 
     assert dinic_algorithm(g, 0, 8) == expected
 
+
+def generate_graph(cnt_nodes: int, max_capacity: int, cnt_edges=0) -> Graph:
+    graph = Graph()
+    if cnt_edges > 0:
+        gr = nx.gnm_random_graph(cnt_nodes, cnt_edges, directed=True)
+        graph.set_stats(cnt_nodes, cnt_edges)
+    else:
+        gr = nx.gnm_random_graph(cnt_nodes, cnt_nodes**2//1.6, directed=True)
+        graph.set_stats(cnt_nodes, cnt_nodes**2//1.6)
+    edgelist = nx.to_edgelist(gr)
+    for edge in edgelist:
+        graph.add_edge(edge[0], edge[1], random.randint(3, max_capacity))
+    return graph
+
+
 # def generate_graph(node_count, edges_count):
 #     if node_count < 2:
 #         return
