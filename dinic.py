@@ -1,6 +1,8 @@
 from collections import deque
+from graph import Graph
 
-def dinic_algorithm(graph, source, sink):
+
+def dinic_algorithm(graph: Graph, source: int, sink: int):
     def build_level_graph(level_graph, source):
         level_graph.clear()
         level_graph[source] = 0

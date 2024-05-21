@@ -44,18 +44,18 @@ def edmonds_karp(graph: Graph, source: int, stock: int) -> int:
     return max_flow
 
 
-if __name__ == "__main__":
-    g = Graph()
-    i = 0
-    with open("test_flow.txt", 'r') as file:
-        for line in file:
-            if i == 0:
-                g.set_stats(*[int(k) for k in line.rstrip("\n").split(' ')])
-                i += 1
-            else:
-                f, s, cap = [int(k) for k in line.rstrip("\n").split(' ')]
-                g.add_edge(f, s, cap)
-    start = time.time()
-    res = edmonds_karp(g, 1, g.get_stats()[0])
-    print(time.time() - start)
-    print(res)
+# if __name__ == "__main__":
+#     g = Graph()
+#     i = 0
+#     with open("test_flow.txt", 'r') as file:
+#         for line in file:
+#             if i == 0:
+#                 g.set_stats(*[int(k) for k in line.rstrip("\n").split(' ')])
+#                 i += 1
+#             else:
+#                 f, s, cap = [int(k) for k in line.rstrip("\n").split(' ')]
+#                 g.add_edge(f, s, cap)
+#     start = time.time()
+#     res = edmonds_karp(g, 1, g.get_stats()[0])
+#     print(time.time() - start)
+#     print(res)
