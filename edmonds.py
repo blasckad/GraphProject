@@ -3,11 +3,13 @@ from collections import deque
 import time
 
 
-def edmonds_karp(graph: Graph, source: int, stock: int) -> int:
+def edmonds_karp(graph: Graph) -> int:
     """
     Function transforms input graph to residual network
     and return value of maximum flow
     """
+    source = graph._source
+    stock = graph._sink
     max_flow = 0
     queue = deque()
     visited = {}
@@ -47,7 +49,7 @@ def edmonds_karp(graph: Graph, source: int, stock: int) -> int:
 # if __name__ == "__main__":
 #     g = Graph()
 #     i = 0
-#     with open("test_flow.txt", 'r') as file:
+#     with open("MaxFlow-tests/test_rl07.txt", 'r') as file:
 #         for line in file:
 #             if i == 0:
 #                 g.set_stats(*[int(k) for k in line.rstrip("\n").split(' ')])

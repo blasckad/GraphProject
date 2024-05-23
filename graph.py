@@ -1,21 +1,34 @@
+import copy
+
 class Graph:
     def __init__(self):
         self._edges: dict[int, dict[int, list[int, int]]] = {}
+        self._original_edges: dict[int, dict[int, list[int, int]]] = {}
         self._num_vertexes = 0
         self._num_edges = 0
+        self._source = 0
+        self._sink = 0
 
-    def set_stats(self, num_vert: int, num_edg: int):
+    def set_stats(self, num_vert: int, num_edg: int, source: int, sink: int):
         """
         Set number of vertexes and edges
         """
         self._num_vertexes = num_vert
         self._num_edges = num_edg
+        self._source = source
+        self._sink = sink
 
     def get_stats(self):
         """
         Return tuple of num_vertexes and num_edges
         """
-        return self._num_vertexes, self._num_edges
+        return self._num_vertexes, self._num_edges, self._source, self._sink
+    
+    def set_original_edges(self):
+        self._original_edges = copy.deepcopy(self._edges)
+    
+    def set_edges_on_original_edges(self):
+        self._edges = copy.deepcopy(self._original_edges)
     
     def add_edge(self, first_node: int, second_node: int, capacity: int):
         if first_node not in self._edges:
