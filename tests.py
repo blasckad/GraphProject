@@ -59,7 +59,7 @@ def generate_graph(cnt_nodes: int, max_capacity: int, cnt_edges=0) -> Graph:
     return graph
 
 
-def test_graphs_from_files() -> list:
+def test_graphs_from_files() -> dict:
     result = {}
     for dirpath, dirnames, filenames in os.walk("MaxFlow-tests"):
         for filename in filenames:
