@@ -15,6 +15,7 @@ def edmonds_karp(graph: Graph) -> int:
     visited = {}
     while True:
         queue.append(source)
+        # key is child node, value is parent node
         visited[source] = None
         while queue and stock not in visited:
             pivot = queue.popleft()
