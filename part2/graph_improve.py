@@ -104,6 +104,10 @@ class Graph:
         Args:
             subset: it's a set of cluster nodes
         """
+
+        if self.vol_of_set(self._nodes_set.difference(subset)) == 0:
+            return self.vol_of_set(subset)
+
         return self.cut_function(subset)/min(
             self.vol_of_set(subset),
             self.vol_of_set(self._nodes_set.difference(subset)))

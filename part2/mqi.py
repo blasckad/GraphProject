@@ -92,3 +92,4 @@ def mqi(graph: Graph, R: set) -> set:
         else:
             # The current threshold is considered optimal, return the previous solution
             return Sk
+

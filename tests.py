@@ -6,6 +6,8 @@ from graph import Graph
 from edmonds import edmonds_karp
 from dinic import dinic_algorithm
 import copy
+import numpy as np
+
 
 
 def test(graph: Graph, iterations: int) -> dict:
@@ -106,10 +108,8 @@ def test_graphs_from_generate(cnt_nodes: int, max_capacity: int, cnt_edges: int,
 
         if edmonds_worse_time < elapsed_time:
             edmonds_worse_time = elapsed_time
-        if edmonds_average_time != 0:
-            edmonds_average_time = (edmonds_average_time + elapsed_time)/2
-        else:
-            edmonds_average_time = elapsed_time
+        
+        edmonds_average_time += elapsed_time
 
         graph.set_edges_on_original_edges()
 
@@ -120,22 +120,61 @@ def test_graphs_from_generate(cnt_nodes: int, max_capacity: int, cnt_edges: int,
 
         if dinic_worse_time < elapsed_time:
             dinic_worse_time = elapsed_time
-        if dinic_average_time != 0:
-            dinic_average_time = (dinic_average_time + elapsed_time)/2
-        else:
-            dinic_average_time = elapsed_time
+
+        dinic_average_time += elapsed_time
     
     result["dinic_worse_time"] = dinic_worse_time
-    result["dinic_average_time"] = dinic_average_time
+    result["dinic_average_time"] = dinic_average_time/iterations
     result["edmonds_worse_time"] = edmonds_worse_time
-    result["edmonds_average_time"] = edmonds_average_time
+    result["edmonds_average_time"] = edmonds_average_time/iterations
     return result
 
 
 
 if __name__ == "__main__":
     # tests = test_graphs_from_files()
-    # # print(tests)
     # for filename, result in tests.items():
     #     print(filename, ': ', result)
-    print(test_graphs_from_generate(1000, 5000, 100000, 50))
+
+    # print(test_graphs_from_generate(1000, 40000, 10000, 50))
+
+    nodes = 500
+    edges = 50000
+    max_capacity = 100
+
+    stats = [nodes, max_capacity, edges]
+
+    result = []
+    for i in range(3):
+        m = 1
+        for _ in range(3):
+            stats[i] *= m
+            result.append(test_graphs_from_generate(stats[0], stats[1], stats[2], 20))
+            print(stats)
+            m *= 10
+            stats = [nodes, max_capacity, edges]
+
+    print
+    
+    for i in range(3):
+        # print("Увеличение в 10 раз")
+        # print("edmonds:", (result[(i*3)+1]["edmonds_average_time"] - result[0]["edmonds_average_time"])/result[0]["edmonds_average_time"])
+        # print("dinic:", (result[(i*3)+1]["dinic_average_time"] - result[0]["dinic_average_time"])/result[0]["dinic_average_time"])
+        # print("Увеличение в 100 раз")
+        # print("edmonds:", (result[(i*3)+2]["edmonds_average_time"] - result[0]["edmonds_average_time"])/result[0]["edmonds_average_time"])
+        # print("dinic:", (result[(i*3)+2]["dinic_average_time"] - result[0]["dinic_average_time"])/result[0]["dinic_average_time"])
+
+        print(stats[i])
+        print("Разница:", (result[(i*3)]["edmonds_average_time"])/result[(i*3)]["dinic_average_time"])
+        print("Увеличение в 10 раз")
+        print("Разница:", (result[(i*3)+1]["edmonds_average_time"])/result[(i*3)+1]["dinic_average_time"])
+        print("Увеличение в 100 раз")
+        print("Разница:", (result[(i*3)+2]["edmonds_average_time"])/result[(i*3)+2]["dinic_average_time"])
+        
+        
+
+    
+    
+
+
+    
