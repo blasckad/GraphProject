@@ -5,11 +5,11 @@ class Graph:
         self._num_edges = 0
         self._nodes_set = set()
 
-    def set_stats(self, num_vert: int, num_edg: int):
+    def set_stats(self, num_vert=0, num_edg=0):
         """
         Set number of vertexes and edges
         """
-        self._num_vertexes = num_vert
+        self._num_vertexes = max(num_vert, len(self._nodes_set))
         self._num_edges = num_edg
 
     def get_stats(self):
