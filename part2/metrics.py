@@ -1,4 +1,4 @@
-from graph import Graph
+from graph_improve import Graph
 import networkx as nx
 
 def to_nx_graph(graph: Graph) -> nx.DiGraph:
